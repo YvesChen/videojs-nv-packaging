@@ -1,10 +1,10 @@
 {
-  "name": "custom-ui",
+  "name": "videojs-nv-packaging",
   "description": "An ui project base on Vue.js ",
   "version": "1.0.3",
   "author": "frankxjkuang <frankxjkuang@gmail.com>",
   "license": "MIT",
-  "main": "dist/custom-ui.js",
+  "main": "dist/videojs-nv-packaging.js",
   "private": false,
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
