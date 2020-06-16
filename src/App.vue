@@ -3,17 +3,16 @@
         <div class="moor-item">
             <label>Switch: </label>
 
-            <moor-switch
-                    v-model="lightSwitch">开关(开):
-            </moor-switch>
+            <!--<moor-switch-->
+                    <!--v-model="lightSwitch">开关(开):-->
+            <!--</moor-switch>-->
 
-            <moor-switch
-                    v-model="switchLight">开关(关):
-            </moor-switch>
+            <!--<moor-switch-->
+                    <!--v-model="switchLight">开关(关):-->
+            <!--</moor-switch>-->
 
             <player :url="`http://cdn.chaofan.com/video/2020/06/03/ltyn4XZTdNUBuinFLcpYoZYhSXvJ&controlbar=auto`"></player>
         </div>
-
     </div>
 </template>
 

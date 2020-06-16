@@ -98,6 +98,9 @@ module.exports = {
     performance: {
         hints: false
     },
+    plugins: [
+        // {src:"@/src/plugins/vue-video.js",ssr:false}
+    ],
     devtool: '#eval-source-map'
 }
 

@@ -38,3 +38,6 @@ window.videojs=Video;
 import Flvjs from 'flv.js';
 window.flvjs = Flvjs;
 require('../util/video-util/videojs-flvjs.min');
+
+export default ({ app, store }) => {
+}
