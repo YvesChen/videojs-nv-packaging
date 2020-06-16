@@ -1,0 +1,344 @@
+@import "./base/_scss_function";
+html,body{
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+button,
+a{
+    outline: none;
+}
+
+
+@keyframes vjs-spinner-fade {
+    0% {
+        border-color: #979797 #979797 transparent #979797;
+    }
+    35% {
+        border-color: rgba(151,151,151,.6) rgba(151,151,151,.2) transparent rgba(151,151,151,.4);
+    }
+    100% {
+        border-color: #979797 #979797 transparent #979797;
+    }
+}
+@-webkit-keyframes vjs-spinner-fade {
+    0% {
+        border-color: #979797 #979797 transparent #979797;
+    }
+    35% {
+        border-color: rgba(151,151,151,.6) rgba(151,151,151,.2) transparent rgba(151,151,151,.4);
+    }
+    100% {
+        border-color: #979797 #979797 transparent #979797;
+    }
+}
+.player-view {
+    background-color: #000;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    & .video-js {
+        position: absolute;
+        height: inherit;
+        width: 100%;
+        padding: 0;
+        bottom: 0;
+        left: 0;
+        top: 0;
+
+        & .tip-prompt {
+            //.transform(translateX(-50%));
+            box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.15);
+            background-color: rgba(64, 64, 64, 0.9);
+            white-space: nowrap;
+            position: absolute;
+            border-radius: 4px;
+            padding: 10px 20px;
+            margin-bottom: 5px;
+            font-size: 12px;
+            bottom: 100%;
+            color: #fff;
+            right: 0;
+
+            &:before {
+                border-color: rgba(64, 64, 64, 0.9) transparent transparent;
+                border-width: 5px 7px;
+                border-style: solid;
+                position: absolute;
+                bottom: -10px;
+                content: '';
+                right: 22px;
+            }
+        }
+        & .vjs-live-control{
+            line-height: 45px;
+            width: auto;
+            flex: none;
+        }
+        & .vjs-icon-play,
+        & .vjs-play-control .vjs-icon-placeholder,
+        & .vjs-big-play-button .vjs-icon-placeholder:before {
+            font-family: "iconfont";
+        }
+        //暂停
+        & .vjs-icon-pause:before,
+        & .vjs-play-control.vjs-playing .vjs-icon-placeholder:before{
+            font-size: 18px;
+            content: '\e655';
+        }
+        //播放
+        & .vjs-icon-play:before,
+        & .vjs-play-control .vjs-icon-placeholder:before,
+        & .vjs-big-play-button .vjs-icon-placeholder:before {
+            content: "\e656";
+        }
+        //静音
+        & .vjs-icon-volume-mute:before,
+        & .vjs-mute-control.vjs-vol-0 .vjs-icon-placeholder:before {
+            font-size: 25px;
+            content: "\e65f";
+        }
+
+        //一阶音量
+        & .vjs-icon-volume-low:before,
+        & .vjs-mute-control.vjs-vol-1 .vjs-icon-placeholder:before {
+            font-size: 25px;
+            content: "\e65b";
+        }
+        //二阶音量
+        & .vjs-icon-volume-mid:before,
+        & .vjs-mute-control.vjs-vol-2 .vjs-icon-placeholder:before {
+            font-size: 25px;
+            content: "\e65c";
+        }
+        //打开声音
+        & .vjs-icon-volume-high:before,
+        & .vjs-mute-control .vjs-icon-placeholder:before {
+            font-size: 25px;
+            content: "\e65d";
+        }
+
+        //画中画
+        & .vjs-icon-picture-in-picture-enter:before,
+        & .vjs-picture-in-picture-control .vjs-icon-placeholder:before {
+            font-family: "VideoJS"!important;
+            font-size: 24px;
+        }
+        & .vjs-icon-picture-in-picture-exit:before,
+        &.vjs-picture-in-picture .vjs-picture-in-picture-control .vjs-icon-placeholder:before {
+            font-size: 18px;
+            color:#0F80DA;
+        }
+        //全屏
+        & .vjs-icon-fullscreen-enter:before,
+        & .vjs-fullscreen-control .vjs-icon-placeholder:before {
+            content: "\e653";
+        }
+        //恢复全屏
+        & .vjs-icon-fullscreen-exit:before,
+        &.vjs-fullscreen .vjs-fullscreen-control .vjs-icon-placeholder:before {
+            content: "\e654";
+            color:#0F80DA;
+        }
+
+        & .vjs-big-play-button{
+            .transition(all .3s ease);
+            background-color: rgba(255,255,255,.6);
+            margin: -32px 0 0 -32px;
+            border-radius: 50%;
+            line-height: 64px;
+            font-size: 32px;
+            border: none;
+            width: 64px;
+            height: 64px;
+            display: none;
+            color: #fff;
+            & .vjs-icon-placeholder{
+                &:before{
+                    margin: -16px 0 0 -11px;
+                    line-height: initial;
+                    height: auto;
+                    width: auto;
+                    left: 50%;
+                    top: 50%;
+                }
+            }
+        }
+
+        & .vjs-control{
+            &:focus:before,
+            &:hover:before,
+            &:focus {
+                text-shadow: 0 0 5px rgba(0, 0, 0, 1);
+            }
+        }
+        & .vjs-control-bar{
+            background-color: #333;
+            position: fixed;
+            height: 45px;
+            & .vjs-time-control{
+                line-height: 45px;
+            }
+            & .vjs-button {
+                &.replayon{
+                    cursor: pointer;
+                }
+                & > .vjs-icon-placeholder{
+                    font-family: "iconfont";
+                    color: #777;
+                    &:before{
+                        line-height: 45px;
+                    }
+                }
+            }
+            & .vjs-volume-panel {
+                width: 10em;
+                & .vjs-volume-control{
+                    margin-right: 0;
+                    width: 5em;
+                    height: 3px;
+                    opacity: 1;
+                }
+                & .vjs-volume-bar {
+                    &.vjs-slider-horizontal {
+                        //margin-top: 21px;
+                        //height: 3px;
+                        background-color: transparent;
+                        margin: 13px 0 0;
+                        height: 20px;
+
+                        &:before {
+                            background-color: rgba(115, 133, 159, 0.5);
+                            position: absolute;
+                            content: '';
+                            left: 0;
+                            right: 0;
+                        }
+                        &:before,
+                        & .vjs-volume-level {
+                            margin-top: -2px;
+                            bottom: auto;
+                            height: 4px;
+                            top:50%;
+                        }
+
+                        & .vjs-volume-level {
+                            background-color: #0F80DA;
+                            &:before{
+                                font-size: 14px;
+                                top: -5px;
+                                right: -5px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        & .vjs-watermark-top-right{
+            padding: 0;
+            right: 5%;
+            top:5%;
+        }
+        & .vjs-loading-spinner{
+            border: 4px solid transparent;
+            &:before {
+                border-color: #979797 #979797 transparent #979797;
+                -webkit-animation: vjs-spinner-spin 1.8s cubic-bezier(0.6, 0.2, 0, 0.8) infinite, vjs-spinner-fade 1.8s linear infinite;
+                animation: vjs-spinner-spin 1.8s cubic-bezier(0.6, 0.2, 0, 0.8) infinite, vjs-spinner-fade 1.8s linear infinite;
+            }
+            &:after{
+                display: none;
+            }
+        }
+
+        &.vjs-paused{
+            & .vjs-big-play-button{
+                display: inline-block;
+            }
+        }
+        &.vjs-waiting,
+        &.vjs-error{
+            & .vjs-big-play-button{
+                display: none;
+            }
+        }
+        &.vjs-error {
+            & .vjs-error-display {
+                &:before{
+                    color:rgba(255,255,255,.6);
+                    font-family: "iconfont";
+                    content: "\e65a";
+                    font-size: 34px;
+                }
+                & .vjs-modal-dialog-content{
+                    position: absolute;
+                    margin-top: 30px;
+                    font-size: 12px;
+                    height: auto;
+                    color: #999;
+                    padding: 0;
+                    top: 50%;
+                }
+            }
+        }
+        &.vjs-show-control-bar{
+            & .vjs-control-bar{
+                //opacity: 1!important;
+                //display: flex!important;
+            }
+        }
+        &.vjs-init-load{
+            & .vjs-big-play-button{
+                display: none;
+            }
+            & .vjs-loading-spinner{
+                -webkit-animation: vjs-spinner-show 0s linear 0.3s forwards;
+                animation: vjs-spinner-show 0s linear 0.3s forwards;
+                display: block;
+            }
+        }
+    }
+    &.is-pc{
+        & .video-js{
+            & .vjs-big-play-button{
+                &:hover{
+                    color:#0F80DA;
+                }
+            }
+            & .vjs-control-bar{
+                & .vjs-button {
+                    & > .vjs-icon-placeholder{
+                        &:hover{
+                            color:#0F80DA;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &.is-ios{
+        & .video-js{
+            &.vjs-error {
+                & .vjs-error-display{
+                    &:before{
+                        content: "";
+                    }
+                }
+            }
+        }
+    }
+    &.control-bar-show{
+        & .video-js {
+            margin-bottom: 45px;
+            &.vjs-show-control-bar {
+                & .vjs-control-bar {
+                    opacity: 1!important;
+                    display: flex!important;
+                }
+            }
+        }
+    }
+}

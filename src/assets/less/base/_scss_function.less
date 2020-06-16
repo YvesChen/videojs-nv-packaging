@@ -1,0 +1,179 @@
+@charset "utf-8";
+/*
+    scss公用方法定义
+        1.全局样式规定。
+*/
+
+.backface-visibility(@tyle:hidden) {
+    backface-visibility: @tyle;
+    -webkit-backface-visibility: @tyle;
+    -moz-backface-visibility: @tyle;
+    -ms-backface-visibility: @tyle;
+}
+.transition(@num:.5s) {
+    transition: @num;
+    -webkit-transition: @num;
+    -moz-transition: @num;
+    -o-transition: @num;
+
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+}
+.transition-delay(@num:.5s) {
+    transition-delay: @num;
+    -webkit-transition-delay: @num;
+    -moz-transition-delay: @num;
+    -o-transition-delay: @num;
+}
+.transition-fn(@num) {
+    transition: @num;
+    -webkit-transition: @num;
+    -moz-transition: @num;
+    -o-transition: @num;
+}
+.transform(@num) {
+    transform: @num;
+    -webkit-transform: @num;
+    -moz-transform: @num;
+    -o-transform: @num;
+}
+.transform-origin(@num) {
+    transform-origin: @num;
+    -webkit-transform-origin: @num;
+    -moz-transform-origin: @num;
+    -o-transform-origin: @num;
+}
+.gradient(@deg,@startColor,@endColor) {
+    background: -webkit-linear-gradient(@deg, @startColor, @endColor); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(@deg, @startColor, @endColor); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(@deg, @startColor, @endColor); /* Firefox 3.6 - 15 */
+    background: linear-gradient(@deg, @startColor, @endColor); /* 标准的语法 */
+}
+.boder-gradient(@startColor,@endColor) {
+    border-image: -webkit-linear-gradient(@startColor, @endColor) 30 30; /* Safari 5.1 - 6.0 */
+    border-image: -o-linear-gradient(@startColor, @endColor) 30 30; /* Opera 11.1 - 12.0 */
+    border-image: -moz-linear-gradient(@startColor, @endColor) 30 30; /* Firefox 3.6 - 15 */
+    border-image: linear-gradient(@startColor, @endColor) 30 30; /* 标准的语法 */
+}
+// 模糊
+.filter(@num) {
+    //blur(5px)
+    -webkit-filter: @num;
+    -moz-filter: @num;
+    -o-filter: @num;
+    -ms-filter: @num;
+    filter: @num;
+}
+/*去除浮动*/
+
+.clearfix {
+    clear: both;
+
+    &:after,
+    &:before {
+        content: '';
+        display: table;
+    }
+}
+
+.clearfix-row {
+    .clearfix();
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+}
+
+.box-shadow5 {
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.07);
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.07);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.07);
+}
+
+.box-shadow(@num) {
+    -moz-box-shadow: @num;
+    -webkit-box-shadow: @num;
+    box-shadow: @num;
+}
+.text-shadow(@num) {
+    -moz-text-shadow: @num;
+    -webkit-text-shadow: @num;
+    text-shadow: @num;
+}
+
+.animation(@name:'',@time:0s,@delay:0,@count:1,@function:linear) {
+    //infinite
+    animation-name: @name;
+    animation-duration: @time;
+    animation-timing-function: @function;
+    animation-iteration-count: @count;
+    //animation-direction: alternate;
+    animation-fill-mode: forwards;
+    animation-delay: @delay;
+
+    -webkit-animation-name: @name;
+    -webkit-animation-duration: @time;
+    -webkit-animation-timing-function: @function;
+    -webkit-animation-iteration-count: @count;
+    //-webkit-animation-direction: alternate;
+    -webkit-animation-fill-mode: forwards;
+    -webkit-animation-delay: @delay;
+
+    -moz-animation-name: @name;
+    -moz-animation-duration: @time;
+    -moz-animation-timing-function: @function;
+    -moz-animation-iteration-count: @count;
+    //-moz-animation-direction: alternate;
+    -moz-animation-fill-mode: forwards;
+    -moz-animation-delay: @delay;
+
+    -o-animation-name: @name;
+    -o-animation-duration: @time;
+    -o-animation-timing-function: @function;
+    -o-animation-iteration-count: @count;
+    //-o-animation-direction: alternate;
+    -o-animation-fill-mode: forwards;
+    -o-animation-delay: @delay;
+}
+.radius(@unit:0) {
+    -o-border-radius: @unit;
+    -moz-border-radius: @unit;
+    -webkit-border-radius: @unit;
+    border-radius: @unit;
+}
+// 渐变
+.gradient(@deg,@startColor,@endColor) {
+    background: -webkit-linear-gradient(@deg, @startColor, @endColor); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(@deg, @startColor, @endColor); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(@deg, @startColor, @endColor); /* Firefox 3.6 - 15 */
+    background: linear-gradient(@deg, @startColor, @endColor); /* 标准的语法 */
+}
+// 图片置灰
+.grayscale(@numb:100) {
+    -webkit-filter: grayscale(@numb+0%);
+    -moz-filter: grayscale(@numb+0%);
+    -ms-filter: grayscale(@numb+0%);
+    -o-filter: grayscale(@numb+0%);
+    filter: grayscale(@numb+0%);
+    filter: "#808080";
+}
+
+.scrollbar(@w:6px,@h:6px,@color:#F5F5F5,@radius:10px){
+    &::-webkit-scrollbar{
+        width: @w;
+        height: @h;
+        background-color: @color;
+    }
+
+    /*定义滚动条轨道 内阴影+圆角*/
+    &::-webkit-scrollbar-track{
+        background-color: #F5F5F5;
+    }
+
+    /*定义滑块 内阴影+圆角*/
+    &::-webkit-scrollbar-thumb{
+        border-radius: @radius;
+        background-color: rgba(0,0,0,.1);
+    }
+}

@@ -1,0 +1,93 @@
+{
+  "id": "1601710",
+  "name": "web-video-player",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "12652686",
+      "name": "Full_on",
+      "font_class": "Full_on",
+      "unicode": "e653",
+      "unicode_decimal": 58963
+    },
+    {
+      "icon_id": "12652688",
+      "name": "General_on",
+      "font_class": "General_on",
+      "unicode": "e654",
+      "unicode_decimal": 58964
+    },
+    {
+      "icon_id": "12652690",
+      "name": "Pause_on",
+      "font_class": "Pause_on",
+      "unicode": "e655",
+      "unicode_decimal": 58965
+    },
+    {
+      "icon_id": "12652693",
+      "name": "Play_on",
+      "font_class": "Play_on",
+      "unicode": "e656",
+      "unicode_decimal": 58966
+    },
+    {
+      "icon_id": "12652694",
+      "name": "sound-0",
+      "font_class": "sound-0",
+      "unicode": "e657",
+      "unicode_decimal": 58967
+    },
+    {
+      "icon_id": "12652696",
+      "name": "replay on",
+      "font_class": "replayon",
+      "unicode": "e658",
+      "unicode_decimal": 58968
+    },
+    {
+      "icon_id": "12652697",
+      "name": "Sound_on",
+      "font_class": "Sound_on",
+      "unicode": "e659",
+      "unicode_decimal": 58969
+    },
+    {
+      "icon_id": "12705349",
+      "name": "wrong",
+      "font_class": "wrong",
+      "unicode": "e65a",
+      "unicode_decimal": 58970
+    },
+    {
+      "icon_id": "12708246",
+      "name": "sound-1",
+      "font_class": "sound-1",
+      "unicode": "e65b",
+      "unicode_decimal": 58971
+    },
+    {
+      "icon_id": "12708247",
+      "name": "sound-2",
+      "font_class": "sound-2",
+      "unicode": "e65c",
+      "unicode_decimal": 58972
+    },
+    {
+      "icon_id": "12708248",
+      "name": "sound-3",
+      "font_class": "sound-3",
+      "unicode": "e65d",
+      "unicode_decimal": 58973
+    },
+    {
+      "icon_id": "12850532",
+      "name": "sound-0",
+      "font_class": "sound-01",
+      "unicode": "e65f",
+      "unicode_decimal": 58975
+    }
+  ]
+}
