@@ -1,9 +1,9 @@
-<style lang="less">
-    @import "../../assets/less/player";
+<style lang="less" >
+    @import "../../../assets/less/components/player";
 </style>
 <template>
     <div class="player-view" :class="{'is-ios':isIos,'is-pc':!isMobile,'control-bar-show':controlBar=='show'}">
-        <video v-if="videoInit" ref="videojsFlvjsPlayer" id="videojs-flvjs-player" class="video-js vjs-default-skin vjs-big-play-centered vjs-init-load" muted="muted" playsinline></video>
+        <video v-if="videoInit" id="videojs-flvjs-player" ref="videojsEle" class="video-js vjs-default-skin vjs-big-play-centered vjs-init-load" muted="muted" playsinline></video>
     </div>
 </template>
 
@@ -15,11 +15,16 @@
      * 2：通过id获取视频地址
      * /player?id=j374oin3z91fgqo
      * */
-    // import { Util } from "@/assets/util/util";
-
+    // import $ from 'jquery';
+    // import "../../../assets/util/jQuery.common";
     export default {
         name: 'player',
         props:{
+            locale:{
+                default: function () {
+                    return "en";
+                }
+            },
             url: {
                 default: function () {
                     return "";
@@ -29,13 +34,13 @@
         components: {},
         data() {
             let me = this,
-                _query = {},//me.$route.query,
+                _query = me.$route.query,
                 data = {
                     DEMO: {
                         playerPageEle: null,
                         videoEle: null
                     },
-                    logo: decodeURIComponent(_query.logo || require("../../assets/image/base/login/rlogo.png")),
+                    logo: decodeURIComponent(_query.logo || require("../../../assets/image/base/login/rlogo.png")),
                     isLive:_query.live==1 || _query.live==undefined?false:true,
                     controlBar:_query.controlbar||"show",
                     logowidth:_query.logowidth||150,
@@ -63,15 +68,16 @@
                     }
                 }
             }
-
-            try {
-                me.isIos = $.browser.isIPhone || $.browser.isIPad || $.browser.isIPod;
-            } catch (e) {
-            }
+            // try {
+            //     me.isIos = $.browser.isIPhone || $.browser.isIPad || $.browser.isIPod;
+            // } catch (e) {
+            //     console.log(e)
+            // }
             setTimeout(function () {
                 me.$nextTick(function () {
                     me.videoInit = true;
                     me.$nextTick(function () {
+                        me.getElement();
                         me.videoLoad();
                     });
                 });
@@ -87,8 +93,8 @@
         methods: {
             getElement() {
                 let me = this;
-                // me.DEMO.playerPageEle = $("#videojs-flvjs-player");
-                // me.DEMO.videoEle = me.DEMO.playerPageEle.find("video");
+                me.DEMO.playerPageEle = $("#videojs-flvjs-player");
+                me.DEMO.videoEle = me.DEMO.playerPageEle.find("video");
             },
             reset() {
                 let me = this;
@@ -97,7 +103,7 @@
                     if (me.playerEvn.isInPictureInPicture()) {
                         me.playerEvn.exitPictureInPicture();
                     }
-                    me.$refs.videojsFlvjsPlayer.classList.add("vjs-waiting");
+                    me.DEMO.playerPageEle.addClass("vjs-waiting");
                     setTimeout(function () {
                         me.playerEvn.reset(); //重置 video
                         me.playerEvn.src({
@@ -109,15 +115,16 @@
             },
             videoLoad() {
                 let me = this,
-                    volume = 0;//parseFloat(me.$Util.getLStore('volume') || .5);
+                    volume = parseFloat(me.$Util.getLStore('volume') || .5);
                 try {
                     me.isMobile = $.browser.isMobile();
                 } catch (e) {
 
                 }
+
                 if (!me.playerEvn) {
                     // 自动播放必须加此参数 muted="muted"
-                    let _lang = 'en',//me.$i18n.locale || 'en',
+                    let _lang = me.locale,
                         controlBar = [
                             {name: 'playToggle'}                   // 播放按钮
                         ].concat(
@@ -177,71 +184,69 @@
                             children: controlBar
                         },
                     }, function onPlayerReady() {
-                        // me.playerEvn.volume(0);
-                        // me.$nextTick(function () {
-                        //     me.getElement();
-                        //     let _playControl = $('.vjs-play-control'),
-                        //         vjsVolumePanel = $(".vjs-volume-panel"),
-                        //         _replayon = $(`<button class="vjs-control vjs-button replayon" title="${me.$t('Reload')}"><span class="vjs-icon-placeholder icon-replayon"></span></button>`);
-                        //
-                        //     _playControl.after(_replayon);
-                        //     if (!me.isLive) {
-                        //         _replayon.after(`<div style="flex: 1;"/>`);
-                        //     }
-                        //     _replayon.click(function () {
-                        //         me.reset();
-                        //     });
-                        //     if (me.isMobile) {
-                        //         vjsVolumePanel.css({width: 'auto'}).find(".vjs-volume-control").hide();
-                        //     }
-                        //     me.$refs.videojsFlvjsPlayer.classList.add("vjs-show-control-bar");
-                        //     // me.DEMO.playerPageEle.addClass("vjs-show-control-bar");
-                        //     me.playerEvn.volume(volume);
-                        //     me.playerEvn.on('play', function () {
-                        //         // me.DEMO.playerPageEle.removeClass("vjs-init-load");
-                        //         me.$refs.videojsFlvjsPlayer.classList.remove("vjs-show-control-bar");
-                        //     });
-                        //     // me.shoTipPrompt('muted-tip', me.DEMO.playerPageEle.find(".vjs-volume-panel button.vjs-control"), me.$t('You are using mute playback'));
-                        //
-                        //
-                        //     $(".vjs-watermark-content.vjs-watermark-top-right img").width(me.logowidth);
-                        // });
+                        me.playerEvn.volume(0);
+                        me.$nextTick(function () {
+                            me.getElement();
+                            let _playControl = $('.vjs-play-control'),
+                                vjsVolumePanel = $(".vjs-volume-panel"),
+                                _replayon = $(`<button class="vjs-control vjs-button replayon" title="${me.$t('Reload')}"><span class="vjs-icon-placeholder icon-replayon"></span></button>`);
+
+                            _playControl.after(_replayon);
+                            if (!me.isLive) {
+                                _replayon.after(`<div style="flex: 1;"/>`);
+                            }
+                            _replayon.click(function () {
+                                me.reset();
+                            });
+                            if (me.isMobile) {
+                                vjsVolumePanel.css({width: 'auto'}).find(".vjs-volume-control").hide();
+                            }
+                            me.DEMO.playerPageEle.addClass("vjs-show-control-bar");
+                            me.playerEvn.volume(volume);
+                            me.playerEvn.on('play', function () {
+                                me.DEMO.playerPageEle.removeClass("vjs-init-load");
+                            });
+                            me.shoTipPrompt('muted-tip', me.DEMO.playerPageEle.find(".vjs-volume-panel button.vjs-control"), me.$t('You are using mute playback'));
+
+
+                            $(".vjs-watermark-content.vjs-watermark-top-right img").width(me.logowidth);
+                        });
                     });
-                    // me.playerEvn.on('error', (err) => {
-                    //     me.playerEvn.errorDisplay.close();   //将错误信息不显示
-                    //
-                    //     me.$nextTick(function () {
-                    //         me.getElement();
-                    //         console.error("适配播放错误")
-                    //         me.DEMO.playerPageEle.removeClass("vjs-init-load");
-                    //         me.DEMO.playerPageEle.removeClass("vjs-waiting");
-                    //     });
-                    // });
-                    // me.playerEvn.on('fullscreenchange', function () {
-                    //     if (me.playerEvn.isFullscreen_) {
-                    //         me.DEMO.playerPageEle.removeClass("vjs-show-control-bar");
-                    //     } else {
-                    //         me.DEMO.playerPageEle.addClass("vjs-show-control-bar");
-                    //     }
-                    //     $("#muted-tip").remove();
-                    // });
-                    // me.playerEvn.on('loadeddata', () => {
-                    //     me.DEMO.playerPageEle.removeClass("vjs-waiting");
-                    // });
-                    //
-                    // me.playerEvn.on("volumechange", function (val) {
-                    //     volume = me.playerEvn.volume() || 0;
-                    //     // me.$Util.setLStore('volume', volume);
-                    //     if (me.initVolume) {
-                    //         $("#muted-tip").remove();
-                    //     }
-                    // });
-                    // me.playerEvn.watermark({
-                    //     debug: true,
-                    //     position: 'top-right',
-                    //     fadeTime: null,
-                    //     image: me.logo
-                    // });
+                    me.playerEvn.on('error', (err) => {
+                        me.playerEvn.errorDisplay.close();   //将错误信息不显示
+
+                        me.$nextTick(function () {
+                            me.getElement();
+                            console.error("适配播放错误")
+                            me.DEMO.playerPageEle.removeClass("vjs-init-load");
+                            me.DEMO.playerPageEle.removeClass("vjs-waiting");
+                        });
+                    });
+                    me.playerEvn.on('fullscreenchange', function () {
+                        if (me.playerEvn.isFullscreen_) {
+                            me.DEMO.playerPageEle.removeClass("vjs-show-control-bar");
+                        } else {
+                            me.DEMO.playerPageEle.addClass("vjs-show-control-bar");
+                        }
+                        $("#muted-tip").remove();
+                    });
+                    me.playerEvn.on('loadeddata', () => {
+                        me.DEMO.playerPageEle.removeClass("vjs-waiting");
+                    });
+
+                    me.playerEvn.on("volumechange", function (val) {
+                        volume = me.playerEvn.volume() || 0;
+                        me.$Util.setLStore('volume', volume);
+                        if (me.initVolume) {
+                            $("#muted-tip").remove();
+                        }
+                    });
+                    me.playerEvn.watermark({
+                        debug: true,
+                        position: 'top-right',
+                        fadeTime: null,
+                        image: me.logo
+                    });
                 } else {
                     me.reset();
                 }
@@ -265,6 +270,6 @@
                     }, 1000 * 5);
                 }, 200);
             },
-        },
+        }
     }
 </script>
