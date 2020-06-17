@@ -8,15 +8,15 @@ for (let i in language.languageMaps) {
     try {
         let _lang = i || 'en';
         switch (_lang) {
-            case "zht":
-                _lang = "zh-TW";
-                break;
-            case "zh":
-                _lang = "zh-CN";
-                break;
-            case "pt":
-                _lang = "pt-BR";
-                break;
+        case "zht":
+            _lang = "zh-TW";
+            break;
+        case "zh":
+            _lang = "zh-CN";
+            break;
+        case "pt":
+            _lang = "pt-BR";
+            break;
         }
 
         let _data = require(`video.js/dist/lang/${_lang}.json`),

@@ -5,11 +5,11 @@
 </template>
 
 <script>
-    // import VideoPlayer from "../components/video-player/src/main";
-    export default {
-        name: "Home",
-        components: {
-            // VideoPlayer
-        }
-    };
+// import VideoPlayer from "../components/video-player/src/main";
+export default {
+    name: "Home",
+    components: {
+        // VideoPlayer
+    }
+};
 </script>

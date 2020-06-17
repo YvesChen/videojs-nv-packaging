@@ -377,14 +377,14 @@ window.jQuery=$;
                 x.push(map.charAt(b & 0x3f));
             }
             switch (str.length - len) {
-                case 1:
-                    b = str.charCodeAt(i) << 16;
-                    x.push(map.charAt(b >> 18) + map.charAt((b >> 12) & 0x3f) + padchar + padchar);
-                    break;
-                case 2:
-                    b = (str.charCodeAt(i) << 16) | (str.charCodeAt(i + 1) << 8);
-                    x.push(map.charAt(b >> 18) + map.charAt((b >> 12) & 0x3f) + map.charAt((b >> 6) & 0x3f) + padchar);
-                    break;
+            case 1:
+                b = str.charCodeAt(i) << 16;
+                x.push(map.charAt(b >> 18) + map.charAt((b >> 12) & 0x3f) + padchar + padchar);
+                break;
+            case 2:
+                b = (str.charCodeAt(i) << 16) | (str.charCodeAt(i + 1) << 8);
+                x.push(map.charAt(b >> 18) + map.charAt((b >> 12) & 0x3f) + map.charAt((b >> 6) & 0x3f) + padchar);
+                break;
             }
             return x.join('');
         },
@@ -412,14 +412,14 @@ window.jQuery=$;
                 x.push(String.fromCharCode(b >> 16, (b >> 8) & 0xff, b & 0xff));
             }
             switch (pads) {
-                case 1:
-                    b = (map.indexOf(str.charAt(i)) << 18) | (map.indexOf(str.charAt(i)) << 12) | (map.indexOf(str.charAt(i)) << 6);
-                    x.push(String.fromCharCode(b >> 16, (b >> 8) & 0xff));
-                    break;
-                case 2:
-                    b = (map.indexOf(str.charAt(i)) << 18) | (map.indexOf(str.charAt(i)) << 12);
-                    x.push(String.fromCharCode(b >> 16));
-                    break;
+            case 1:
+                b = (map.indexOf(str.charAt(i)) << 18) | (map.indexOf(str.charAt(i)) << 12) | (map.indexOf(str.charAt(i)) << 6);
+                x.push(String.fromCharCode(b >> 16, (b >> 8) & 0xff));
+                break;
+            case 2:
+                b = (map.indexOf(str.charAt(i)) << 18) | (map.indexOf(str.charAt(i)) << 12);
+                x.push(String.fromCharCode(b >> 16));
+                break;
             }
             return unescape(x.join(''));
         },
@@ -460,29 +460,29 @@ window.jQuery=$;
             while (i < len) {
                 c = str.charCodeAt(i++);
                 switch (c >> 4) {
-                    case 0:
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 7:
-                        // 0xxxxxxx
-                        out += str.charAt(i - 1);
-                        break;
-                    case 12:
-                    case 13:
-                        // 110x xxxx 10xx xxxx
-                        char2 = str.charCodeAt(i++);
-                        out += String.fromCharCode(((c & 0x1F) << 6) | (char2 & 0x3F));
-                        break;
-                    case 14:
-                        // 1110 xxxx10xx xxxx10xx xxxx
-                        char2 = str.charCodeAt(i++);
-                        char3 = str.charCodeAt(i++);
-                        out += String.fromCharCode(((c & 0x0F) << 12) | ((char2 & 0x3F) << 6) | ((char3 & 0x3F) << 0));
-                        break;
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                    // 0xxxxxxx
+                    out += str.charAt(i - 1);
+                    break;
+                case 12:
+                case 13:
+                    // 110x xxxx 10xx xxxx
+                    char2 = str.charCodeAt(i++);
+                    out += String.fromCharCode(((c & 0x1F) << 6) | (char2 & 0x3F));
+                    break;
+                case 14:
+                    // 1110 xxxx10xx xxxx10xx xxxx
+                    char2 = str.charCodeAt(i++);
+                    char3 = str.charCodeAt(i++);
+                    out += String.fromCharCode(((c & 0x0F) << 12) | ((char2 & 0x3F) << 6) | ((char3 & 0x3F) << 0));
+                    break;
                 }
             }
             return out;
@@ -1343,24 +1343,24 @@ window.jQuery=$;
             var _n = this.getMinutes();
             var _s = this.getSeconds();
             switch (type) {
-                case 'y':
-                    this.setFullYear(_y + val);
-                    break;
-                case 'm':
-                    this.setMonth(_m + val);
-                    break;
-                case 'd':
-                    this.setDate(_d + val);
-                    break;
-                case 'h':
-                    this.setHours(_h + val);
-                    break;
-                case 'n':
-                    this.setMinutes(_n + val);
-                    break;
-                case 's':
-                    this.setSeconds(_s + val);
-                    break;
+            case 'y':
+                this.setFullYear(_y + val);
+                break;
+            case 'm':
+                this.setMonth(_m + val);
+                break;
+            case 'd':
+                this.setDate(_d + val);
+                break;
+            case 'h':
+                this.setHours(_h + val);
+                break;
+            case 'n':
+                this.setMinutes(_n + val);
+                break;
+            case 's':
+                this.setSeconds(_s + val);
+                break;
             }
             return this;
         },
@@ -1697,14 +1697,14 @@ window.jQuery=$;
         }
         type = Object.prototype.toString.call(value).slice(8, -1);
         switch (type) {
-            case 'String':
-                return !$.trim(value);
-            case 'Array':
-                return !value.length;
-            case 'Object':
-                return $.isEmptyObject(value); // 普通对象使用 for...in 判断，有 key 即为 false
-            default:
-                return false; // 其他对象均视作非空
+        case 'String':
+            return !$.trim(value);
+        case 'Array':
+            return !value.length;
+        case 'Object':
+            return $.isEmptyObject(value); // 普通对象使用 for...in 判断，有 key 即为 false
+        default:
+            return false; // 其他对象均视作非空
         }
     }
 
