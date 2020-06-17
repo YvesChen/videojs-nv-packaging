@@ -1,7 +1,6 @@
 import language from "../../const/language";
 import Video from 'video.js';
 import watermark from 'videojs-watermark';
-import 'videojs-watermark/dist/videojs-watermark.css';
 Video.registerPlugin('watermark', watermark);
 window.videojs=Video;
 

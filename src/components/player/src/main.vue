@@ -15,11 +15,30 @@
      * 2：通过id获取视频地址
      * /player?id=j374oin3z91fgqo
      * */
-    // import $ from 'jquery';
-    // import "../../../assets/util/jQuery.common";
+    import "../../../assets/util/jQuery.common";
     export default {
         name: 'player',
         props:{
+            logo:{
+                default: function () {
+                    return require("../../../assets/image/base/login/rlogo.png");
+                }
+            },
+            logowidth:{
+                default: function () {
+                    return 150;
+                }
+            },
+            isLive:{
+                default: function () {
+                    return false;
+                }
+            },
+            controlBar:{
+                default: function () {
+                    return 'show';
+                }
+            },
             locale:{
                 default: function () {
                     return "en";
@@ -34,23 +53,18 @@
         components: {},
         data() {
             let me = this,
-                _query = me.$route.query,
                 data = {
                     DEMO: {
                         playerPageEle: null,
                         videoEle: null
                     },
-                    logo: decodeURIComponent(_query.logo || require("../../../assets/image/base/login/rlogo.png")),
-                    isLive:_query.live==1 || _query.live==undefined?false:true,
-                    controlBar:_query.controlbar||"show",
-                    logowidth:_query.logowidth||150,
                     isMobile:false,
                     initVolume: false,
                     videoInit:false,
                     isIos:false,
                     support: 0,
                     playerEvn: null,
-                    playerType: decodeURIComponent(_query.playertype || ''),
+                    playerType: '',//decodeURIComponent(_query.playertype || ''),
                     muted: true
                 };
             return data;
@@ -68,11 +82,11 @@
                     }
                 }
             }
-            // try {
-            //     me.isIos = $.browser.isIPhone || $.browser.isIPad || $.browser.isIPod;
-            // } catch (e) {
-            //     console.log(e)
-            // }
+            try {
+                me.isIos = $.browser.isIPhone || $.browser.isIPad || $.browser.isIPod;
+            } catch (e) {
+                console.log(e)
+            }
             setTimeout(function () {
                 me.$nextTick(function () {
                     me.videoInit = true;
