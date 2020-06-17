@@ -1,13 +1,11 @@
 const path = require('path'),
     webpack = require('webpack');
 module.exports = {
-    // 修改 pages 入口
-    pages: {
-        index: {
-            entry: 'src/main.js', // 入口
-            template: 'public/index.html', // 模板
-            filename: 'index.html' // 输出文件
-        }
+    publicPath: '/',
+    filenameHashing: true,
+    productionSourceMap: process.env.NODE_ENV !== 'production',
+    devServer: {
+        port: 8077
     },
     // 扩展 webpack 配置
     chainWebpack: config => {
@@ -16,7 +14,6 @@ module.exports = {
         config.resolve.alias
             .set('@', path.resolve('src'))
             .set('~', path.resolve('packages'))
-        // .set('jq-common', path.resolve(_dirname,''))
         // 把 packages 和 examples 加入编译，因为新增的文件默认是不被 webpack 处理的
         config.module
             .rule('js')
@@ -31,13 +28,27 @@ module.exports = {
                 return options
             })
     },
-    configureWebpack: {
+    configureWebpack:  {
         plugins: [
             new webpack.ProvidePlugin({
                 $: 'jquery',
                 jQuery: 'jquery',
-                'windows.jQuery': 'jquery'
+                'windows.jQuery': 'jquery',
+                'vuex':'Vuex',
+
+                // 'jQuery.common':path.resolve(__dirname, './src/assets/util/jQuery.common.js'),
+                'videojs': ['video.js','default'],
+
+                'flvjs': 'flv.js'
             })
         ]
+    },
+    // 修改 pages 入口
+    pages: {
+        index: {
+            entry: 'src/main.js', // 入口
+            template: 'public/index.html', // 模板
+            filename: 'index.html' // 输出文件
+        }
     },
 }

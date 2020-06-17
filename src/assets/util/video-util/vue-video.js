@@ -1,9 +1,6 @@
 import language from "../../const/language";
-import Video from 'video.js';
 import watermark from 'videojs-watermark';
-Video.registerPlugin('watermark', watermark);
-window.videojs=Video;
-
+videojs.registerPlugin('watermark', watermark);
 for (let i in language.languageMaps) {
     try {
         let _lang = i || 'en';
@@ -25,9 +22,8 @@ for (let i in language.languageMaps) {
         _data['Exit Picture-in-Picture'] = i18nMessages['Exit Picture-in-Picture'];
         videojs.addLanguage(_lang, _data);
     } catch (err) {
-        console.error("播放器暂无语言包:", i);
+        // console.error("播放器暂无语言包:", i);
     }
 }
-import Flvjs from 'flv.js';
-window.flvjs = Flvjs;
+window.videojs=videojs;
 require('./videojs-flvjs.min');

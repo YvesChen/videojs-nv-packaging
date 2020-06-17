@@ -1,6 +1,6 @@
 {
     "name": "videojs-nv-packaging",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "private": false,
     "description": "基于 videojs/flvjs 的视频播放插件",
     "main": "lib/videojs-nv-packaging.umd.min.js",
@@ -46,5 +46,10 @@
         "less-loader": "^5.0.0",
         "prettier": "^1.19.1",
         "vue-template-compiler": "^2.6.11"
+    },
+    "eslintConfig": {
+        "globals": {
+            "videojs": true
+        }
     }
 }
