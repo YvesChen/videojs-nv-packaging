@@ -3,7 +3,14 @@
 </style>
 <template>
     <div class="player-view" :class="{'is-ios':isIos,'is-pc':!isMobile,'control-bar-show':controlBar=='show'}">
-        <video v-if="videoInit" id="videojs-flvjs-player" ref="videojsEle" class="video-js vjs-default-skin vjs-big-play-centered vjs-init-load" muted="muted" playsinline></video>
+        <video v-if="videoInit"
+               id="videojs-flvjs-player"
+               ref="videojsEle"
+               class="video-js vjs-default-skin vjs-big-play-centered vjs-init-load"
+               autoplay
+               preload="auto"
+               playsinline>
+        </video>
     </div>
 </template>
 
@@ -84,6 +91,7 @@
             }
             try {
                 me.isIos = $.browser.isIPhone || $.browser.isIPad || $.browser.isIPod;
+                me.isMobile = $.browser.isMobile();
             } catch (e) {
                 console.log(e)
             }
@@ -130,12 +138,6 @@
             videoLoad() {
                 let me = this,
                     volume = parseFloat(me.$Util.getLStore('volume') || .5);
-                try {
-                    me.isMobile = $.browser.isMobile();
-                } catch (e) {
-
-                }
-
                 if (!me.playerEvn) {
                     // 自动播放必须加此参数 muted="muted"
                     let _lang = me.locale,
@@ -190,7 +192,6 @@
 
                         autoplay: true,
                         muted: true,
-
                         preload: "auto",
                         controls: true,
                         fluid: true, // 自适应宽高
