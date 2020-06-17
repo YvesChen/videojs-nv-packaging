@@ -1,9 +1,9 @@
-import player from './components/player';
+import videoPlayer from './components/video-player';
 
 
 // 所有组件列表
 const components = [
-    player
+    videoPlayer
 ]
 // 定义install方法，接收Vue作为参数
 const install = function(Vue) {

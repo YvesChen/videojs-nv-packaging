@@ -31,6 +31,3 @@ for (let i in language.languageMaps) {
 import Flvjs from 'flv.js';
 window.flvjs = Flvjs;
 require('./videojs-flvjs.min');
-
-export const vueVideo = {
-}

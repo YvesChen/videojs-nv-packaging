@@ -24,7 +24,7 @@
      * */
     import "../../../assets/util/jQuery.common";
     export default {
-        name: 'player',
+        name: 'video-player',
         props:{
             logo:{
                 default: function () {
