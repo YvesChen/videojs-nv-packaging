@@ -37,14 +37,14 @@ module.exports = {
                 'vuex':'Vuex',
 
                 // 'jQuery.common':path.resolve(__dirname, './src/assets/util/jQuery.common.js'),
+                //
+                // 'videojs': path.resolve('node_modules/video.js/dist/video'),
+                // 'window.videojs': path.resolve('node_modules/video.js/dist/video'),
+                // 'flvjs': path.resolve('node_modules/flv.js/dist/flv.js'),
+                // 'window.flvjs': path.resolve('node_modules/flv.js/dist/flv.js'),
 
-                'videojs': path.resolve('node_modules/video.js/dist/video'),
-                'window.videojs': path.resolve('node_modules/video.js/dist/video'),
-                'flvjs': path.resolve('node_modules/flv.js/dist/flv.js'),
-                'window.flvjs': path.resolve('node_modules/flv.js/dist/flv.js'),
-
-                'watermark':'videojs-watermark',
-                'window.watermark':'videojs-watermark'
+                // 'watermark':'videojs-watermark',
+                // 'window.watermark':'videojs-watermark'
             })
         ]
     },

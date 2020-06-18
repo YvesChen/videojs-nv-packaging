@@ -1,6 +1,6 @@
 import language from "../../const/language";
-
-videojs.registerPlugin('watermark', watermark);
+import videojs from 'video.js';
+import 'flv.js';
 for (let i in language.languageMaps) {
     try {
         let _lang = i || 'en';
@@ -25,5 +25,6 @@ for (let i in language.languageMaps) {
         // console.error("播放器暂无语言包:", i);
     }
 }
+
 window.videojs=videojs;
-import "videojs-flvjs/dist/videojs-flvjs"
+require("videojs-flvjs/dist/videojs-flvjs");
