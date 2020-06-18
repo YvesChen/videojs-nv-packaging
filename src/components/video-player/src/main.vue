@@ -109,10 +109,6 @@
             window.winPlayer = me;
         },
         computed: {
-            timezone() {
-                let me = this;
-                return me.$store.state.timezone;
-            }
         },
         methods: {
             getElement() {
@@ -140,19 +136,20 @@
             videoLoad() {
                 let me = this,
                     volume = parseFloat(me.$Util.getLStore('volume') || .5);
+
                 if (!me.playerEvn) {
                     // 自动播放必须加此参数 muted="muted"
                     let _lang = me.locale,
                         controlBar = [
-                            {name: 'playToggle'}                   // 播放按钮
+                            { name: 'playToggle' }                   // 播放按钮
                         ].concat(
                             me.isLive ? [
-                                {name: 'progressControl'}              // 进度条
+                                { name: 'progressControl' }              // 进度条
                             ] : []).concat([
-                            {name: 'volumePanel', show: true},      // 音量控制
-                            {name: "pictureInPictureToggle"},       // 画中画播放模式
-                            {name: 'FullscreenToggle'},             // 全屏
-                            {name: 'Reset'}
+                            { name: 'volumePanel', show: true },      // 音量控制
+                            { name: "pictureInPictureToggle" },       // 画中画播放模式
+                            { name: 'FullscreenToggle' },             // 全屏
+                            { name: 'Reset' }
                         ]);
                     switch (_lang) {
                         case "zht":
@@ -167,14 +164,14 @@
                     }
                     if (me.isMobile) {
                         controlBar = [
-                            {name: 'playToggle'}                   // 播放按钮
+                            { name: 'playToggle' }                   // 播放按钮
                         ].concat(
                             me.isLive ? [
-                                {name: 'progressControl'}              // 进度条
+                                { name: 'progressControl' }              // 进度条
                             ] : []).concat([
-                            {name: 'volumePanel', show: true},      // 音量控制
-                            {name: 'FullscreenToggle'},             // 全屏
-                            {name: 'Reset'}
+                            { name: 'volumePanel', show: true },      // 音量控制
+                            { name: 'FullscreenToggle' },             // 全屏
+                            { name: 'Reset' }
                         ]);
                     }
                     me.playerEvn = videojs('videojs-flvjs-player', {
@@ -201,9 +198,11 @@
                             children: controlBar
                         },
                     }, function onPlayerReady() {
-                        me.playerEvn.volume(0);
-                        me.$nextTick(function () {
+                        // me.playerEvn.volume(0);
+                        me.$nextTick(function() {
                             me.getElement();
+                            me.playerEvn.play();
+                            me.playerEvn.resetVolumeBar_();
                             let _playControl = $('.vjs-play-control'),
                                 vjsVolumePanel = $(".vjs-volume-panel"),
                                 _replayon = $(`<button class="vjs-control vjs-button replayon" title="${me.$t('Reload')}"><span class="vjs-icon-placeholder icon-replayon"></span></button>`);
@@ -212,19 +211,18 @@
                             if (!me.isLive) {
                                 _replayon.after(`<div style="flex: 1;"/>`);
                             }
-                            _replayon.click(function () {
+                            _replayon.click(function() {
                                 me.reset();
                             });
                             if (me.isMobile) {
-                                vjsVolumePanel.css({width: 'auto'}).find(".vjs-volume-control").hide();
+                                vjsVolumePanel.css({ width: 'auto' }).find(".vjs-volume-control").hide();
                             }
                             me.DEMO.playerPageEle.addClass("vjs-show-control-bar");
                             me.playerEvn.volume(volume);
-                            me.playerEvn.on('play', function () {
+                            me.playerEvn.on('play', function() {
                                 me.DEMO.playerPageEle.removeClass("vjs-init-load");
                             });
                             me.shoTipPrompt('muted-tip', me.DEMO.playerPageEle.find(".vjs-volume-panel button.vjs-control"), me.$t('You are using mute playback'));
-
 
                             $(".vjs-watermark-content.vjs-watermark-top-right img").width(me.logowidth);
                         });
@@ -232,14 +230,14 @@
                     me.playerEvn.on('error', (err) => {
                         me.playerEvn.errorDisplay.close();   //将错误信息不显示
 
-                        me.$nextTick(function () {
+                        me.$nextTick(function() {
                             me.getElement();
                             console.error("适配播放错误")
                             me.DEMO.playerPageEle.removeClass("vjs-init-load");
                             me.DEMO.playerPageEle.removeClass("vjs-waiting");
                         });
                     });
-                    me.playerEvn.on('fullscreenchange', function () {
+                    me.playerEvn.on('fullscreenchange', function() {
                         if (me.playerEvn.isFullscreen_) {
                             me.DEMO.playerPageEle.removeClass("vjs-show-control-bar");
                         } else {
@@ -250,8 +248,7 @@
                     me.playerEvn.on('loadeddata', () => {
                         me.DEMO.playerPageEle.removeClass("vjs-waiting");
                     });
-
-                    me.playerEvn.on("volumechange", function (val) {
+                    me.playerEvn.on("volumechange", function(val) {
                         volume = me.playerEvn.volume() || 0;
                         me.$Util.setLStore('volume', volume);
                         if (me.initVolume) {

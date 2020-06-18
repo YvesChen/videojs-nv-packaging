@@ -1,55 +1,57 @@
 {
-  "name": "videojs-nv-packaging",
-  "version": "1.1.2",
-  "private": false,
-  "description": "基于 videojs/flvjs 的视频播放插件",
-  "main": "lib/videojs-nv-packaging.umd.min.js",
-  "author": "videojs-nv-packaging",
-  "keywords": [
-    "videojs-nv-packaging"
-  ],
-  "license": "MIT",
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "start": "serve -s dist",
-    "lib": "vue-cli-service build --target lib --name videojs-nv-packaging --dest lib src/index.js"
-  },
-  "dependencies": {
-    "core-js": "^3.6.5",
-    "eslint": "^6.8.0",
-    "flv.js": "^1.5.0",
-    "jquery": "^3.5.1",
-    "video.js": "^7.8.2",
-    "videojs-flvjs": "^0.2.0",
-    "vue": "^2.6.11",
-    "vue-i18n": "^8.18.2",
-    "vue-router": "^3.2.0",
-    "vuex": "^3.4.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/YvesChen/videojs-nv-packaging.git"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.4.0",
-    "@vue/cli-plugin-eslint": "~4.4.0",
-    "@vue/cli-plugin-router": "~4.4.0",
-    "@vue/cli-plugin-vuex": "~4.4.0",
-    "@vue/cli-service": "~4.4.0",
-    "@vue/eslint-config-prettier": "^6.0.0",
-    "babel-eslint": "^7.2.3",
-    "eslint-plugin-prettier": "^3.1.3",
-    "eslint-plugin-vue": "^6.2.2",
-    "less": "^3.0.4",
-    "less-loader": "^5.0.0",
-    "prettier": "^1.19.1",
-    "vue-template-compiler": "^2.6.11"
-  },
-  "eslintConfig": {
-    "globals": {
-      "videojs": true
+    "name": "videojs-nv-packaging",
+    "version": "1.1.2",
+    "private": false,
+    "description": "基于 videojs/flvjs 的视频播放插件",
+    "main": "lib/videojs-nv-packaging.umd.min.js",
+    "author": "videojs-nv-packaging",
+    "keywords": [
+        "videojs-nv-packaging"
+    ],
+    "license": "MIT",
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build",
+        "lint": "vue-cli-service lint",
+        "start": "serve -s dist",
+        "lib": "vue-cli-service build --target lib --name videojs-nv-packaging --dest lib src/index.js"
+    },
+    "dependencies": {
+        "babel-preset-es2015": "^6.24.1",
+        "compression-webpack-plugin": "^4.0.0",
+        "core-js": "^3.6.5",
+        "eslint": "^6.8.0",
+        "flv.js": "^1.5.0",
+        "jquery": "^3.5.1",
+        "video.js": "^7.8.2",
+        "videojs-flvjs": "^0.2.0",
+        "vue": "^2.6.11",
+        "vue-i18n": "^8.18.2",
+        "vue-router": "^3.2.0",
+        "vuex": "^3.4.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/YvesChen/videojs-nv-packaging.git"
+    },
+    "devDependencies": {
+        "@vue/cli-plugin-babel": "~4.4.0",
+        "@vue/cli-plugin-eslint": "~4.4.0",
+        "@vue/cli-plugin-router": "~4.4.0",
+        "@vue/cli-plugin-vuex": "~4.4.0",
+        "@vue/cli-service": "~4.4.0",
+        "@vue/eslint-config-prettier": "^6.0.0",
+        "babel-eslint": "^7.2.3",
+        "eslint-plugin-prettier": "^3.1.3",
+        "eslint-plugin-vue": "^6.2.2",
+        "less": "^3.0.4",
+        "less-loader": "^5.0.0",
+        "prettier": "^1.19.1",
+        "vue-template-compiler": "^2.6.11"
+    },
+    "eslintConfig": {
+        "globals": {
+            "videojs": true
+        }
     }
-  }
 }

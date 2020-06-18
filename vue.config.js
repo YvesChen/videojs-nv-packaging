@@ -1,5 +1,6 @@
 const path = require('path'),
-    webpack = require('webpack');
+    webpack = require('webpack'),
+    CompressionPlugin = require("compression-webpack-plugin");
 module.exports = {
     publicPath: '/',
     filenameHashing: true,
@@ -28,25 +29,39 @@ module.exports = {
                 return options
             })
     },
-    configureWebpack:  {
-        plugins: [
+    configureWebpack: config => {
+        config.plugins.push(
             new webpack.ProvidePlugin({
                 $: 'jquery',
                 jQuery: 'jquery',
                 'windows.jQuery': 'jquery',
-                'vuex':'Vuex',
-
-                // 'jQuery.common':path.resolve(__dirname, './src/assets/util/jQuery.common.js'),
-                //
-                // 'videojs': path.resolve('node_modules/video.js/dist/video'),
-                // 'window.videojs': path.resolve('node_modules/video.js/dist/video'),
-                // 'flvjs': path.resolve('node_modules/flv.js/dist/flv.js'),
-                // 'window.flvjs': path.resolve('node_modules/flv.js/dist/flv.js'),
-
-                // 'watermark':'videojs-watermark',
-                // 'window.watermark':'videojs-watermark'
+                'vuex': 'Vuex'
             })
-        ]
+        );
+        // 为生产环境修改配置...
+        config.plugins.push(
+            //生产环境自动删除console
+            // new UglifyJsPlugin({
+            //     uglifyOptions: {
+            //         compress: {
+            //             warnings: false,
+            //             drop_debugger: true,
+            //             drop_console: true,
+            //         },
+            //     },
+            //     sourceMap: false,
+            //     parallel: true,
+            // })
+        );
+    },
+    // css相关配置
+    css: {
+        // 是否使用css分离插件 ExtractTextPlugin
+        extract: true,
+        // 开启 CSS source maps?
+        sourceMap: false,
+        // 启用 CSS modules for all css / pre-processor files.
+        modules: false,
     },
     // 修改 pages 入口
     pages: {

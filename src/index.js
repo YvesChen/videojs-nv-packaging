@@ -1,6 +1,5 @@
 import videoPlayer from './components/video-player';
 
-
 // 所有组件列表
 const components = [
     videoPlayer
