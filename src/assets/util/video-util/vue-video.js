@@ -1,4 +1,5 @@
 import language from "../../const/language";
+
 videojs.registerPlugin('watermark', watermark);
 for (let i in language.languageMaps) {
     try {
@@ -25,4 +26,4 @@ for (let i in language.languageMaps) {
     }
 }
 window.videojs=videojs;
-require('./videojs-flvjs.min');
+import "videojs-flvjs/dist/videojs-flvjs"

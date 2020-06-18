@@ -1,7 +1,5 @@
 const path = require('path'),
     webpack = require('webpack');
-
-console.log("HHHHHHHHHHHHHHHHHHHH:",process.env.NODE_ENV)
 module.exports = {
     publicPath: '/',
     filenameHashing: true,
@@ -42,6 +40,7 @@ module.exports = {
 
                 'videojs': path.resolve('node_modules/video.js/dist/video'),
                 'window.videojs': path.resolve('node_modules/video.js/dist/video'),
+                'flvjs': path.resolve('node_modules/flv.js/dist/flv.js'),
                 'window.flvjs': path.resolve('node_modules/flv.js/dist/flv.js'),
 
                 'watermark':'videojs-watermark',
