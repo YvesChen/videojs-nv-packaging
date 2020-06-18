@@ -256,12 +256,12 @@ export default {
                         $("#muted-tip").remove();
                     }
                 });
-                me.playerEvn.watermark({
-                    debug: true,
-                    position: 'top-right',
-                    fadeTime: null,
-                    image: me.logo
-                });
+                // me.playerEvn.watermark({
+                //     debug: true,
+                //     position: 'top-right',
+                //     fadeTime: null,
+                //     image: me.logo
+                // });
             } else {
                 me.reset();
             }

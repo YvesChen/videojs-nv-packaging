@@ -1,5 +1,4 @@
 import language from "../../const/language";
-import watermark from 'videojs-watermark';
 videojs.registerPlugin('watermark', watermark);
 for (let i in language.languageMaps) {
     try {

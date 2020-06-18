@@ -2,9 +2,7 @@ module.exports = {
     root: true,
     env: {
         node: true,
-        jquery: true,
-        // videojs: true,
-        // flvjs: true
+        jquery: true
     },
     extends: [
         "plugin:vue/essential",

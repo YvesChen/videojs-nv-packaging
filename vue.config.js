@@ -1,5 +1,7 @@
 const path = require('path'),
     webpack = require('webpack');
+
+console.log("HHHHHHHHHHHHHHHHHHHH:",process.env.NODE_ENV)
 module.exports = {
     publicPath: '/',
     filenameHashing: true,
@@ -37,9 +39,13 @@ module.exports = {
                 'vuex':'Vuex',
 
                 // 'jQuery.common':path.resolve(__dirname, './src/assets/util/jQuery.common.js'),
-                'videojs': ['video.js','default'],
 
-                'flvjs': 'flv.js'
+                'videojs': path.resolve('node_modules/video.js/dist/video'),
+                'window.videojs': path.resolve('node_modules/video.js/dist/video'),
+                'window.flvjs': path.resolve('node_modules/flv.js/dist/flv.js'),
+
+                'watermark':'videojs-watermark',
+                'window.watermark':'videojs-watermark'
             })
         ]
     },

@@ -1,6 +1,6 @@
 {
     "name": "videojs-nv-packaging",
-    "version": "1.0.4",
+    "version": "1.0.8",
     "private": false,
     "description": "基于 videojs/flvjs 的视频播放插件",
     "main": "lib/videojs-nv-packaging.umd.min.js",
@@ -13,6 +13,7 @@
         "serve": "vue-cli-service serve",
         "build": "vue-cli-service build",
         "lint": "vue-cli-service lint",
+        "start": "serve -s dist",
         "lib": "vue-cli-service build --target lib --name videojs-nv-packaging --dest lib src/index.js"
     },
     "dependencies": {
