@@ -220,12 +220,6 @@
                             me.playerEvn.on('play', function() {
                                 me.DEMO.playerPageEle.removeClass("vjs-init-load");
                             });
-                            me.shoTipPrompt('muted-tip', me.DEMO.playerPageEle.find(".vjs-volume-panel button.vjs-control"), me.$t('You are using mute playback'));
-
-                            $(".vjs-watermark-content.vjs-watermark-top-right img").width(me.logowidth);
-
-
-
                             await me.$refs.videojsEle.play().then(() => {
                                 console.log('可以自动播放');
                                 me.initVolume = true;
@@ -234,6 +228,7 @@
                                 console.log("不允许自动播放");
                                 me.playerEvn.volume(0);
                                 me.playerEvn.play();
+                                me.shoTipPrompt('muted-tip', me.DEMO.playerPageEle.find(".vjs-volume-panel button.vjs-control"), me.$t('You are using mute playback'));
                             });
                             $("html").on('click',()=>{
                                 if(!me.originVolume) {
@@ -289,6 +284,8 @@
                 let me = this,
                     tipPrompt = $(`<div id="${id}" class="tip-prompt">${text}</div>`),
                     _closeTime=null;
+                console.log("DDDDDDDDDDDDDDDDD:",me.playerEvn.volume())
+
                 panel.append(tipPrompt).addClass("position-r z-index-2");
                 tipPrompt.click((event) => {
                     event.stopPropagation();
@@ -299,7 +296,7 @@
                     me.initVolume = true;
                     tipPrompt.addClass('show');
                     clearTimeout(_closeTime);
-                    _closeTime=setTimeout(function() {
+                    _closeTime = setTimeout(function() {
                         me.closeTipPrompt();
                     }, 1000 * 5);
                 }, 200);
