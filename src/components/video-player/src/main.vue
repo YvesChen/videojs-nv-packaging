@@ -31,34 +31,34 @@
     import "../../../assets/util/jQuery.common";
     export default {
         name: 'video-player',
-        props:{
-            logo:{
-                default: function () {
+        props: {
+            logo: {
+                default: function() {
                     return require("../../../assets/image/base/login/rlogo.png");
                 }
             },
-            logowidth:{
-                default: function () {
+            logowidth: {
+                default: function() {
                     return 150;
                 }
             },
-            isLive:{
-                default: function () {
+            isLive: {
+                default: function() {
                     return false;
                 }
             },
-            controlBar:{
-                default: function () {
+            controlBar: {
+                default: function() {
                     return 'show';
                 }
             },
-            locale:{
-                default: function () {
+            locale: {
+                default: function() {
                     return "en";
                 }
             },
             url: {
-                default: function () {
+                default: function() {
                     return "";
                 }
             }
@@ -71,15 +71,16 @@
                         playerPageEle: null,
                         videoEle: null
                     },
-                    isMobile:false,
+                    isMobile: false,
                     initVolume: false,
-                    videoInit:false,
-                    isIos:false,
+                    videoInit: false,
+                    isIos: false,
                     support: 0,
                     playerEvn: null,
                     playerType: '',
                     muted: false,
-                    volume:parseFloat(me.$Util.getLStore('volume') || .5)
+                    originVolume: false,
+                    volume: parseFloat(me.$Util.getLStore('volume') || .5)
                 };
             return data;
         },
@@ -102,19 +103,18 @@
             } catch (e) {
                 console.log(e)
             }
-            setTimeout(function () {
-                me.$nextTick(function () {
+            setTimeout(function() {
+                me.$nextTick(function() {
                     me.videoInit = true;
-                    me.$nextTick(function () {
+                    me.$nextTick(function() {
                         me.getElement();
                         me.videoLoad();
                     });
                 });
-            },200);
+            }, 200);
             window.winPlayer = me;
         },
-        computed: {
-        },
+        computed: {},
         methods: {
             getElement() {
                 let me = this;
@@ -129,7 +129,7 @@
                         me.playerEvn.exitPictureInPicture();
                     }
                     me.DEMO.playerPageEle.addClass("vjs-waiting");
-                    setTimeout(function () {
+                    setTimeout(function() {
                         me.playerEvn.reset(); //重置 video
                         me.playerEvn.src({
                             src: me.url,
@@ -200,25 +200,21 @@
                             children: controlBar
                         },
                     }, async onPlayerReady => {
-                        await me.$refs.videojsEle.play().then(()=>{
-                            console.log('可以自动播放',me.volume);
+                        await me.$refs.videojsEle.play().then(() => {
+                            console.log('可以自动播放', me.volume);
                             me.initVolume = true;
-                            me.playerEvn.volume(me.volume);
-                            me.playerEvn.play();
-                        }).catch((err)=>{
+                            me.initSetVolume();
+                        }).catch((err) => {
                             console.log("不允许自动播放");
                             me.playerEvn.volume(0);
                             me.playerEvn.play();
                         });
-                        let originVolume=false;
                         $("html").on('click',()=>{
-                            if(!originVolume) {
-                                originVolume=true;
-                                me.playerEvn.volume(me.volume);
-                                me.playerEvn.play();
+                            if(!me.originVolume) {
+                                me.initSetVolume();
                             }
                         });
-                        me.$nextTick( ()=> {
+                        me.$nextTick(() => {
                             me.getElement();
                             let _playControl = $('.vjs-play-control'),
                                 vjsVolumePanel = $(".vjs-volume-panel"),
@@ -275,22 +271,40 @@
                     me.reset();
                 }
             },
+            initSetVolume() {
+                let me = this;
+                me.originVolume = true;
+                me.playerEvn.volume(me.volume || .5);
+                me.playerEvn.play();
+            },
             /**
              * 显示新功能弹窗
              * me.shoTipPrompt('',$(".query-team > .tip"),'此功能已上线')
              * */
-            shoTipPrompt: function (id, panel, text) {
+            shoTipPrompt: function(id, panel, text) {
                 let me = this,
-                    tipPrompt = $(['<div id="' + id + '" class="tip-prompt">' + text + '</div>'].join(''));
-                panel.append(tipPrompt).addClass("position-r z-index-2");
-                setTimeout(function () {
-                    me.initVolume = true;
-                    tipPrompt.addClass('show');
-                    setTimeout(function () {
+                    tipPrompt = $(`<div id="${id}" class="tip-prompt">${text}</div>`),
+                    _closeTime=null,
+                    _close = () => {
                         tipPrompt.addClass('hidden').removeClass('hide');
-                        setTimeout(function () {
+                        setTimeout(function() {
                             tipPrompt.remove();
                         }, 600);
+                    };
+                panel.append(tipPrompt).addClass("position-r z-index-2");
+                tipPrompt.click((event) => {
+                    event.stopPropagation();
+                    clearTimeout(_closeTime);
+                    _close();
+
+                    me.initSetVolume();
+                });
+                setTimeout(function() {
+                    me.initVolume = true;
+                    tipPrompt.addClass('show');
+                    clearTimeout(_closeTime);
+                    _closeTime=setTimeout(function() {
+                        _close();
                     }, 1000 * 5);
                 }, 200);
             },
