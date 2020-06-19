@@ -138,7 +138,7 @@
                     }, 500);
                 }
             },
-            async videoLoad() {
+            videoLoad() {
                 let me = this;
                 if (!me.playerEvn) {
                     // 自动播放必须加此参数 muted="muted"
@@ -178,8 +178,6 @@
                         ]);
                     }
 
-
-
                     me.playerEvn = videojs('videojs-flvjs-player', {
                         language: _lang,
                         techOrder: ['html5', 'flvjs'],
@@ -203,7 +201,7 @@
                         },
                     }, async onPlayerReady => {
                         await me.$refs.videojsEle.play().then(()=>{
-                            console.log('可以自动播放');
+                            console.log('可以自动播放',me.volume);
                             me.initVolume = true;
                             me.playerEvn.volume(me.volume);
                             me.playerEvn.play();
