@@ -146,9 +146,9 @@
                         controlBar = [
                             { name: 'playToggle' }                   // 播放按钮
                         ].concat(
-                            me.isLive ? [
+                            me.isLive ? []:[
                                 { name: 'progressControl' }              // 进度条
-                            ] : []).concat([
+                            ]).concat([
                             { name: 'volumePanel', show: true },      // 音量控制
                             { name: "pictureInPictureToggle" },       // 画中画播放模式
                             { name: 'FullscreenToggle' },             // 全屏
