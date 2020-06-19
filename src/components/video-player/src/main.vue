@@ -207,7 +207,7 @@
                                 _replayon = $(`<button class="vjs-control vjs-button replayon" title="${me.$t('Reload')}"><span class="vjs-icon-placeholder icon-replayon"></span></button>`);
 
                             _playControl.after(_replayon);
-                            if (!me.isLive) {
+                            if (me.isLive) {
                                 _replayon.after(`<div style="flex: 1;"/>`);
                             }
                             _replayon.click(function() {

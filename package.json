@@ -1,6 +1,6 @@
 {
   "name": "videojs-nv-packaging",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "private": false,
   "description": "基于 videojs/flvjs 的视频播放插件",
   "main": "lib/videojs-nv-packaging.umd.min.js",
