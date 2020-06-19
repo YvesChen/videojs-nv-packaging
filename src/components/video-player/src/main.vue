@@ -199,22 +199,8 @@
                         controlBar: {
                             children: controlBar
                         },
-                    }, async onPlayerReady => {
-                        await me.$refs.videojsEle.play().then(() => {
-                            console.log('可以自动播放', me.volume);
-                            me.initVolume = true;
-                            me.initSetVolume();
-                        }).catch((err) => {
-                            console.log("不允许自动播放");
-                            me.playerEvn.volume(0);
-                            me.playerEvn.play();
-                        });
-                        $("html").on('click',()=>{
-                            if(!me.originVolume) {
-                                me.initSetVolume();
-                            }
-                        });
-                        me.$nextTick(() => {
+                    }, onPlayerReady => {
+                        me.$nextTick(async() => {
                             me.getElement();
                             let _playControl = $('.vjs-play-control'),
                                 vjsVolumePanel = $(".vjs-volume-panel"),
@@ -237,6 +223,23 @@
                             me.shoTipPrompt('muted-tip', me.DEMO.playerPageEle.find(".vjs-volume-panel button.vjs-control"), me.$t('You are using mute playback'));
 
                             $(".vjs-watermark-content.vjs-watermark-top-right img").width(me.logowidth);
+
+
+
+                            await me.$refs.videojsEle.play().then(() => {
+                                console.log('可以自动播放');
+                                me.initVolume = true;
+                                me.initSetVolume();
+                            }).catch((err) => {
+                                console.log("不允许自动播放");
+                                me.playerEvn.volume(0);
+                                me.playerEvn.play();
+                            });
+                            $("html").on('click',()=>{
+                                if(!me.originVolume) {
+                                    me.initSetVolume();
+                                }
+                            });
                         });
                     });
                     me.playerEvn.on('error', (err) => {
