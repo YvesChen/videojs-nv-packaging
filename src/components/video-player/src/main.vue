@@ -3,12 +3,16 @@
 </style>
 <template>
     <div class="player-view" :class="{'is-ios':isIos,'is-pc':!isMobile,'control-bar-show':controlBar=='show'}">
-        <video v-if="videoInit"
-               id="videojs-flvjs-player"
+        <!--v-if="videoInit"-->
+
+        <video id="videojs-flvjs-player"
                ref="videojsEle"
                class="video-js vjs-default-skin vjs-big-play-centered vjs-init-load"
-               autoplay
-               preload="auto"
+               autoplay="autoplay"
+               webkit-playsinline=""
+               x-webkit-airplay=""
+               x5-playsinline=""
+               preload="preload"
                playsinline>
         </video>
         <img class="logo" v-if="logo" :src="logo" :style="{width:logowidth}">
@@ -73,8 +77,9 @@
                     isIos:false,
                     support: 0,
                     playerEvn: null,
-                    playerType: '',//decodeURIComponent(_query.playertype || ''),
-                    muted: true
+                    playerType: '',
+                    muted: false,
+                    volume:parseFloat(me.$Util.getLStore('volume') || .5)
                 };
             return data;
         },
@@ -133,10 +138,8 @@
                     }, 500);
                 }
             },
-            videoLoad() {
-                let me = this,
-                    volume = parseFloat(me.$Util.getLStore('volume') || .5);
-
+            async videoLoad() {
+                let me = this;
                 if (!me.playerEvn) {
                     // 自动播放必须加此参数 muted="muted"
                     let _lang = me.locale,
@@ -174,6 +177,9 @@
                             { name: 'Reset' }
                         ]);
                     }
+
+
+
                     me.playerEvn = videojs('videojs-flvjs-player', {
                         language: _lang,
                         techOrder: ['html5', 'flvjs'],
@@ -190,19 +196,32 @@
                         }],
 
                         autoplay: true,
-                        muted: true,
-                        preload: "auto",
                         controls: true,
                         fluid: true, // 自适应宽高
                         controlBar: {
                             children: controlBar
                         },
-                    }, function onPlayerReady() {
-                        // me.playerEvn.volume(0);
-                        me.$nextTick(function() {
-                            me.getElement();
+                    }, async onPlayerReady => {
+                        await me.$refs.videojsEle.play().then(()=>{
+                            console.log('可以自动播放');
+                            me.initVolume = true;
+                            me.playerEvn.volume(me.volume);
                             me.playerEvn.play();
-                            me.playerEvn.resetVolumeBar_();
+                        }).catch((err)=>{
+                            console.log("不允许自动播放");
+                            me.playerEvn.volume(0);
+                            me.playerEvn.play();
+                        });
+                        let originVolume=false;
+                        $("html").on('click',()=>{
+                            if(!originVolume) {
+                                originVolume=true;
+                                me.playerEvn.volume(me.volume);
+                                me.playerEvn.play();
+                            }
+                        });
+                        me.$nextTick( ()=> {
+                            me.getElement();
                             let _playControl = $('.vjs-play-control'),
                                 vjsVolumePanel = $(".vjs-volume-panel"),
                                 _replayon = $(`<button class="vjs-control vjs-button replayon" title="${me.$t('Reload')}"><span class="vjs-icon-placeholder icon-replayon"></span></button>`);
@@ -218,7 +237,6 @@
                                 vjsVolumePanel.css({ width: 'auto' }).find(".vjs-volume-control").hide();
                             }
                             me.DEMO.playerPageEle.addClass("vjs-show-control-bar");
-                            me.playerEvn.volume(volume);
                             me.playerEvn.on('play', function() {
                                 me.DEMO.playerPageEle.removeClass("vjs-init-load");
                             });
@@ -249,10 +267,10 @@
                         me.DEMO.playerPageEle.removeClass("vjs-waiting");
                     });
                     me.playerEvn.on("volumechange", function(val) {
-                        volume = me.playerEvn.volume() || 0;
-                        me.$Util.setLStore('volume', volume);
                         if (me.initVolume) {
                             $("#muted-tip").remove();
+                            let volume = me.playerEvn.volume() || 0;
+                            me.$Util.setLStore('volume', volume);
                         }
                     });
                 } else {

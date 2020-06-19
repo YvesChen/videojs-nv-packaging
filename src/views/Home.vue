@@ -1,6 +1,5 @@
 <template>
     <div class="home">
-        <div v-html="aaaa"></div>
         <video-player :url="`http://cdn.chaofan.com/video/2020/06/03/ltyn4XZTdNUBuinFLcpYoZYhSXvJ`"></video-player>
     </div>
 </template>
@@ -13,7 +12,6 @@ export default {
     data(){
         let me=this;
         return {
-            aaaa:1111
         }
     },
 };

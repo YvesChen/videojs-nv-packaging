@@ -1,6 +1,7 @@
 const path = require('path'),
     webpack = require('webpack'),
-    CompressionPlugin = require("compression-webpack-plugin");
+    CompressionPlugin = require("compression-webpack-plugin"),
+    isProduction = process.env.NODE_ENV === 'production';
 module.exports = {
     publicPath: '/',
     filenameHashing: true,
@@ -9,7 +10,7 @@ module.exports = {
         port: 8077
     },
     // 扩展 webpack 配置
-    chainWebpack: config => {
+    chainWebpack: (config) => {
         // @ 默认指向 src 目录，这里要改成 examples
         // 另外也可以新增一个 ~ 指向 packages
         config.resolve.alias
@@ -27,7 +28,7 @@ module.exports = {
             .tap(options => {
                 // 修改它的选项...
                 return options
-            })
+            });
     },
     configureWebpack: config => {
         config.plugins.push(
@@ -37,21 +38,6 @@ module.exports = {
                 'windows.jQuery': 'jquery',
                 'vuex': 'Vuex'
             })
-        );
-        // 为生产环境修改配置...
-        config.plugins.push(
-            //生产环境自动删除console
-            // new UglifyJsPlugin({
-            //     uglifyOptions: {
-            //         compress: {
-            //             warnings: false,
-            //             drop_debugger: true,
-            //             drop_console: true,
-            //         },
-            //     },
-            //     sourceMap: false,
-            //     parallel: true,
-            // })
         );
     },
     // css相关配置
