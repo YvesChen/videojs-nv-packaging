@@ -276,27 +276,20 @@
                 me.originVolume = true;
                 me.playerEvn.volume(me.volume || .5);
                 me.playerEvn.play();
+                me.closeTipPrompt();
             },
             /**
              * 显示新功能弹窗
              * me.shoTipPrompt('',$(".query-team > .tip"),'此功能已上线')
              * */
-            shoTipPrompt: function(id, panel, text) {
+            shoTipPrompt(id, panel, text) {
                 let me = this,
                     tipPrompt = $(`<div id="${id}" class="tip-prompt">${text}</div>`),
-                    _closeTime=null,
-                    _close = () => {
-                        tipPrompt.addClass('hidden').removeClass('hide');
-                        setTimeout(function() {
-                            tipPrompt.remove();
-                        }, 600);
-                    };
+                    _closeTime=null;
                 panel.append(tipPrompt).addClass("position-r z-index-2");
                 tipPrompt.click((event) => {
                     event.stopPropagation();
                     clearTimeout(_closeTime);
-                    _close();
-
                     me.initSetVolume();
                 });
                 setTimeout(function() {
@@ -304,10 +297,19 @@
                     tipPrompt.addClass('show');
                     clearTimeout(_closeTime);
                     _closeTime=setTimeout(function() {
-                        _close();
+                        me.closeTipPrompt();
                     }, 1000 * 5);
                 }, 200);
             },
+            closeTipPrompt(id, panel, text) {
+                let tipPrompt=$(".tip-prompt");
+                if(tipPrompt.length>0) {
+                    tipPrompt.addClass('hidden').removeClass('hide');
+                    setTimeout(function() {
+                        tipPrompt.remove();
+                    }, 600);
+                }
+            }
         }
     }
 </script>
