@@ -1,7 +1,7 @@
 {
-  "id": "1601710",
-  "name": "web-video-player",
-  "font_family": "iconfont",
+  "id": "1896108",
+  "name": "videojs-nv-packaging",
+  "font_family": "video-icon",
   "css_prefix_text": "icon-",
   "description": "",
   "glyphs": [
@@ -34,13 +34,6 @@
       "unicode_decimal": 58966
     },
     {
-      "icon_id": "12652694",
-      "name": "sound-0",
-      "font_class": "sound-0",
-      "unicode": "e657",
-      "unicode_decimal": 58967
-    },
-    {
       "icon_id": "12652696",
       "name": "replay on",
       "font_class": "replayon",
@@ -56,7 +49,7 @@
     },
     {
       "icon_id": "12705349",
-      "name": "wrong",
+      "name": "close",
       "font_class": "wrong",
       "unicode": "e65a",
       "unicode_decimal": 58970
@@ -81,6 +74,13 @@
       "font_class": "sound-3",
       "unicode": "e65d",
       "unicode_decimal": 58973
+    },
+    {
+      "icon_id": "12652694",
+      "name": "sound-0",
+      "font_class": "sound-0",
+      "unicode": "e657",
+      "unicode_decimal": 58967
     },
     {
       "icon_id": "12850532",
