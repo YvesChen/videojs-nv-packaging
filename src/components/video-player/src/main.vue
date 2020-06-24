@@ -74,7 +74,7 @@
                     playerType: '',
                     muted: false,
                     originVolume: false,
-                    volume: parseFloat(me.$Util.getLStore('volume') || .5)
+                    volume: parseFloat(window.localStorage.getItem('volume') || .5)
                 };
             return data;
         },
@@ -256,7 +256,7 @@
                                 document.getElementById("muted-tip").remove()
                             }
                             let volume = me.playerEvn.volume() || 0;
-                            me.$Util.setLStore('volume', volume);
+                            window.localStorage.setItem('volume', volume);
                         }
                     });
                 } else {
