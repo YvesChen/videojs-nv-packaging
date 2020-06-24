@@ -33,9 +33,6 @@ module.exports = {
     configureWebpack: config => {
         config.plugins.push(
             new webpack.ProvidePlugin({
-                $: 'jquery',
-                jQuery: 'jquery',
-                'windows.jQuery': 'jquery',
                 'vuex': 'Vuex'
             })
         );

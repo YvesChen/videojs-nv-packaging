@@ -2,9 +2,7 @@
     @import "../../../assets/less/components/player";
 </style>
 <template>
-    <div class="player-view" :class="{'is-ios':isIos,'is-pc':!isMobile,'control-bar-show':controlBar=='show'}">
-        <!--v-if="videoInit"-->
-
+    <div ref="playerView" class="player-view" :class="{'is-ios':isIos,'is-pc':!isMobile,'control-bar-show':controlBar=='show'}">
         <video id="videojs-flvjs-player"
                ref="videojsEle"
                class="video-js vjs-default-skin vjs-big-play-centered vjs-init-load"
@@ -28,7 +26,7 @@
      * /player?id=j374oin3z91fgqo
      * */
     import "../../../assets/util/video-util/vue-video";
-    import "../../../assets/util/jQuery.common";
+    import browser from "../../../assets/util/browser";
     export default {
         name: 'video-player',
         props: {
@@ -67,10 +65,6 @@
         data() {
             let me = this,
                 data = {
-                    DEMO: {
-                        playerPageEle: null,
-                        videoEle: null
-                    },
                     isMobile: false,
                     initVolume: false,
                     videoInit: false,
@@ -98,8 +92,8 @@
                 }
             }
             try {
-                me.isIos = $.browser.isIPhone || $.browser.isIPad || $.browser.isIPod;
-                me.isMobile = $.browser.isMobile();
+                me.isIos = browser.isIPhone || browser.isIPad || browser.isIPod;
+                me.isMobile = browser.isMobile();
             } catch (e) {
                 console.log(e)
             }
@@ -107,7 +101,6 @@
                 me.$nextTick(function() {
                     me.videoInit = true;
                     me.$nextTick(function() {
-                        me.getElement();
                         me.videoLoad();
                     });
                 });
@@ -116,19 +109,13 @@
         },
         computed: {},
         methods: {
-            getElement() {
-                let me = this;
-                me.DEMO.playerPageEle = $("#videojs-flvjs-player");
-                me.DEMO.videoEle = me.DEMO.playerPageEle.find("video");
-            },
             reset() {
                 let me = this;
-                me.getElement();
                 if (me.playerEvn) {
                     if (me.playerEvn.isInPictureInPicture()) {
                         me.playerEvn.exitPictureInPicture();
                     }
-                    me.DEMO.playerPageEle.addClass("vjs-waiting");
+                    me.$refs.playerView.children[0].classList.add("vjs-waiting");
                     setTimeout(function() {
                         me.playerEvn.reset(); //重置 video
                         me.playerEvn.src({
@@ -201,24 +188,28 @@
                         },
                     }, onPlayerReady => {
                         me.$nextTick(async() => {
-                            me.getElement();
-                            let _playControl = $('.vjs-play-control'),
-                                vjsVolumePanel = $(".vjs-volume-panel"),
-                                _replayon = $(`<button class="vjs-control vjs-button replayon" title="${me.$t('Reload')}"><span class="vjs-icon-placeholder icon-replayon"></span></button>`);
-
+                            let _playControl = document.getElementsByClassName("vjs-play-control")[0],
+                                vjsVolumePanel = document.getElementsByClassName("vjs-volume-panel")[0],
+                                _replayon =document.createElement(`button`);
+                            _replayon.classList="vjs-control vjs-button replayon";
+                            _replayon.setAttribute("title",me.$t('Reload'));
+                            _replayon.innerHTML=`<span class="vjs-icon-placeholder icon-replayon"></span>`;
                             _playControl.after(_replayon);
                             if (me.isLive) {
-                                _replayon.after(`<div style="flex: 1;"/>`);
+                                let _flexEle=document.createElement(`div`);
+                                _flexEle.style.flex="1";
+                                _replayon.after(_flexEle);
                             }
-                            _replayon.click(function() {
+                            _replayon.onclick=()=> {
                                 me.reset();
-                            });
+                            };
                             if (me.isMobile) {
-                                vjsVolumePanel.css({ width: 'auto' }).find(".vjs-volume-control").hide();
+                                vjsVolumePanel.style.width='auto';
+                                vjsVolumePanel.children[1].style.display="none";
                             }
-                            me.DEMO.playerPageEle.addClass("vjs-show-control-bar");
+                            me.$refs.playerView.children[0].classList.add("vjs-show-control-bar");
                             me.playerEvn.on('play', function() {
-                                me.DEMO.playerPageEle.removeClass("vjs-init-load");
+                                me.$refs.playerView.children[0].classList.remove("vjs-init-load");
                             });
                             await me.$refs.videojsEle.play().then(() => {
                                 console.log('可以自动播放');
@@ -228,39 +219,42 @@
                                 console.log("不允许自动播放");
                                 me.playerEvn.volume(0);
                                 me.playerEvn.play();
-                                me.shoTipPrompt('muted-tip', me.DEMO.playerPageEle.find(".vjs-volume-panel button.vjs-control"), me.$t('You are using mute playback'));
+                                me.shoTipPrompt('muted-tip', document.getElementsByClassName("vjs-volume-panel")[0].children[0], me.$t('You are using mute playback'));
                             });
-                            $("html").on('click',()=>{
+                            document.getElementsByTagName("html")[0].onclick=()=>{
                                 if(!me.originVolume) {
                                     me.initSetVolume();
                                 }
-                            });
+                            };
                         });
                     });
                     me.playerEvn.on('error', (err) => {
                         me.playerEvn.errorDisplay.close();   //将错误信息不显示
 
                         me.$nextTick(function() {
-                            me.getElement();
                             console.error("适配播放错误")
-                            me.DEMO.playerPageEle.removeClass("vjs-init-load");
-                            me.DEMO.playerPageEle.removeClass("vjs-waiting");
+                            me.$refs.playerView.children[0].classList.remove("vjs-init-load");
+                            me.$refs.playerView.children[0].classList.remove("vjs-waiting");
                         });
                     });
                     me.playerEvn.on('fullscreenchange', function() {
                         if (me.playerEvn.isFullscreen_) {
-                            me.DEMO.playerPageEle.removeClass("vjs-show-control-bar");
+                            me.$refs.playerView.children[0].classList.remove("vjs-show-control-bar");
                         } else {
-                            me.DEMO.playerPageEle.addClass("vjs-show-control-bar");
+                            me.$refs.playerView.children[0].classList.add("vjs-show-control-bar");
                         }
-                        $("#muted-tip").remove();
+                        if(document.getElementById("muted-tip")) {
+                            document.getElementById("muted-tip").remove()
+                        }
                     });
                     me.playerEvn.on('loadeddata', () => {
-                        me.DEMO.playerPageEle.removeClass("vjs-waiting");
+                        me.$refs.playerView.children[0].classList.remove("vjs-waiting");
                     });
                     me.playerEvn.on("volumechange", function(val) {
                         if (me.initVolume) {
-                            $("#muted-tip").remove();
+                            if(document.getElementById("muted-tip")) {
+                                document.getElementById("muted-tip").remove()
+                            }
                             let volume = me.playerEvn.volume() || 0;
                             me.$Util.setLStore('volume', volume);
                         }
@@ -282,19 +276,25 @@
              * */
             shoTipPrompt(id, panel, text) {
                 let me = this,
-                    tipPrompt = $(`<div id="${id}" class="tip-prompt">${text}</div>`),
+                    tipPrompt = document.createElement(`div`),
                     _closeTime=null;
-                console.log("DDDDDDDDDDDDDDDDD:",me.playerEvn.volume())
 
-                panel.append(tipPrompt).addClass("position-r z-index-2");
-                tipPrompt.click((event) => {
+                tipPrompt.setAttribute("id",id);
+                tipPrompt.innerHTML=text;
+                tipPrompt.classList.add("tip-prompt");
+
+                panel.appendChild(tipPrompt);
+                panel.classList.add("position-r");
+                panel.classList.add("z-index-2");
+
+                tipPrompt.onclick=(event) => {
                     event.stopPropagation();
                     clearTimeout(_closeTime);
                     me.initSetVolume();
-                });
+                };
                 setTimeout(function() {
                     me.initVolume = true;
-                    tipPrompt.addClass('show');
+                    tipPrompt.classList.add('show');
                     clearTimeout(_closeTime);
                     _closeTime = setTimeout(function() {
                         me.closeTipPrompt();
@@ -302,9 +302,10 @@
                 }, 200);
             },
             closeTipPrompt(id, panel, text) {
-                let tipPrompt=$(".tip-prompt");
-                if(tipPrompt.length>0) {
-                    tipPrompt.addClass('hidden').removeClass('hide');
+                let tipPrompt=document.getElementsByClassName("tip-prompt")[0];
+                if(tipPrompt) {
+                    tipPrompt.classList.add('hidden');
+                    tipPrompt.classList.remove('hide');
                     setTimeout(function() {
                         tipPrompt.remove();
                     }, 600);
