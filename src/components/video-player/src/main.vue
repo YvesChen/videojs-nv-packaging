@@ -99,15 +99,19 @@
             }
             setTimeout(function() {
                 me.$nextTick(function() {
-                    me.videoInit = true;
-                    me.$nextTick(function() {
-                        me.videoLoad();
-                    });
+                    me.videoLoad();
                 });
             }, 200);
             window.winPlayer = me;
         },
         computed: {},
+        destroyed () {
+            let me = this;
+            try {
+                me.playerEvn.dispose();
+            }catch (e) {
+            }
+        },
         methods: {
             reset() {
                 let me = this;
@@ -265,10 +269,14 @@
             },
             initSetVolume() {
                 let me = this;
-                me.originVolume = true;
-                me.playerEvn.volume(me.volume || .5);
-                me.playerEvn.play();
-                me.closeTipPrompt();
+                try {
+                    me.originVolume = true;
+                    me.playerEvn.volume(me.volume || .5);
+                    me.playerEvn.play();
+                    me.closeTipPrompt();
+                }catch (e) {
+                    ;
+                }
             },
             /**
              * 显示新功能弹窗
