@@ -27,4 +27,5 @@ for (let i in language.languageMaps) {
 }
 window.videojs=videojs;
 window.flvjs = flvjs;
+require("./videojs-http-streaming.min");
 require("videojs-flvjs/dist/videojs-flvjs");

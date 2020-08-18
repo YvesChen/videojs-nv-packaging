@@ -59,6 +59,11 @@
                 default: function() {
                     return "";
                 }
+            },
+            overrideNative: {
+                default: function() {
+                    return true;
+                }
             }
         },
         components: {},
@@ -172,6 +177,13 @@
                     me.playerEvn = videojs('videojs-flvjs-player', {
                         language: _lang,
                         techOrder: ['html5', 'flvjs'],
+                        html5: {
+                            nativeAudioTracks: false,
+                            nativeVideoTracks: false,
+                            hls: {
+                                overrideNative: true,
+                            }
+                        },
                         flvjs: {
                             mediaDataSource: {
                                 isLive: false,
