@@ -176,7 +176,6 @@
 
                     me.playerEvn = videojs('videojs-flvjs-player', {
                         language: _lang,
-                        techOrder: ['html5', 'flvjs'],
                         html5: {
                             nativeAudioTracks: false,
                             nativeVideoTracks: false,
@@ -195,7 +194,7 @@
                             src: me.url,
                             type: me.playerType
                         }],
-
+                        techOrder: ['html5', 'flvjs'],
                         autoplay: true,
                         controls: true,
                         fluid: true, // 自适应宽高
