@@ -20,7 +20,7 @@
     <div class="home">
         <video-player
                 v-if="vds"
-                :url="`https://v.wyljc.com/live/sd-102-65020-debug/playlist.m3u8?wsSecret=562fad1981cfb3f4d3bf63af464f2ed7&wsABSTime=5f3bb93e`"
+                :url="`https://v.wyljc.com/live/sd-2-3555578-stream/playlist.m3u8?wsSecret=b6dcda6508bd80b46c85901b0f2c2dea&wsABSTime=5f3ca00d`"
                 :isLive="true"
         ></video-player>
         <a class="link" @click="vds=!vds">重置</a>
